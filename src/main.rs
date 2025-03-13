@@ -1,7 +1,7 @@
 use chrono::{Local};
 
 const DIGITS : [[&str; 11]; 7] = [
-    ["┏━┓ ","  ╻  "," ┏━┓ ", " ┏━┓ "," ╻ ╻ "," ┏━┓ "," ┏   "," ┏━┓ "," ┏━┓ "," ┏━┓ ","   "],
+    ["┏━┓ ","  ╻  "," ┏━┓ ", " ┏━┓ "," ╻ ╻ "," ┏━┓ "," ┏━┓ "," ┏━┓ "," ┏━┓ "," ┏━┓ ","   "],
     ["┃ ┃ ","  ┃  ","   ┃ ", "   ┃ "," ┃ ┃ "," ┃   "," ┃   ","   ┃ "," ┃ ┃ "," ┃ ┃ "," ╻ "],
     ["┃ ┃ ","  ┃  ","   ┃ ", "   ┃ "," ┃ ┃ "," ┃   "," ┃   ","   ┃ "," ┃ ┃ "," ┃ ┃ ","   "],
     ["┃ ┃ ","  ┃  "," ┏━┛ ", " ┣━┫ "," ┗━┫ "," ┗━┓ "," ┣━┓ ","   ┃ "," ┣━┫ "," ┗━┫ ","   "],
@@ -12,9 +12,10 @@ const DIGITS : [[&str; 11]; 7] = [
 
 fn main() {
     loop {
+        print!("\x1b[3J");
+        print!("\x1b[?25l");
         let t = Local::now();
         let time = t.format("%H:%M:%S").to_string();
-        println!("{:?}", time);
         for row in &DIGITS {
             for c in time.chars() {
                 let col = match c {
@@ -26,7 +27,7 @@ fn main() {
             }
             println!();
         }
-        std::thread::sleep(std::time::Duration::from_millis(999))
-
+        std::thread::sleep(std::time::Duration::from_millis(999));
+        print!("\x1b[7A");
     }
 }
